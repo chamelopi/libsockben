@@ -3,8 +3,8 @@
 namespace ben
 {
 	// Explicitly instantiate avalailable socket protocols
-	template class ben::abstract_socket<ben::tcp>;
-	template class ben::abstract_socket<ben::udp>;
+	template class abstract_socket<tcp>;
+	template class abstract_socket<udp>;
 	
 	
 	template<enum socket_protocol protocol>

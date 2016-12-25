@@ -26,6 +26,7 @@ namespace ben
 	{
 	public:
 		server_socket() : abstract_socket<protocol>(-1) {}
+		server_socket(short port);
 	};
 	
 	
@@ -41,7 +42,7 @@ namespace ben
 	{
 	public:
 		// TODO: This currently only supports IPv4. Add IPv6 support
-		tcp_server_socket(short port);
+		tcp_server_socket(short port) : server_socket<tcp>(port) {}
 		// TODO: Add constructor that lets the user chose a local ip address
 		
 		tcp_socket accept();
@@ -51,6 +52,7 @@ namespace ben
 	
 	class udp_socket : public socket<udp>
 	{
+	public:
 		udp_socket(int sockfd) : socket<udp>(sockfd) {}
 		udp_socket(const char* addr, const char* srvc) : socket<udp>(addr, srvc) {}
 		udp_socket(std::string& addr, std::string& srvc) : socket<udp>(addr.c_str(), srvc.c_str()) {}
@@ -58,7 +60,8 @@ namespace ben
 	
 	class udp_server_socket : public server_socket<udp>
 	{
-		// TODO: Implement (only really binds to port)
+	public:
+		udp_server_socket(short port) : server_socket<udp>(port) {}
 	};
 	
 	// TODO: Implement stream operators

@@ -1,10 +1,6 @@
 #include "socket.h"
 #include <iostream>
 
-// Explicitly instantiate avalailable socket protocols
-template class ben::socket<ben::tcp>;
-template class ben::socket<ben::udp>;
-
 
 template <enum ben::socket_protocol protocol>
 ben::socket<protocol>::socket(const char* addr, const char* srvc) : ben::abstract_socket<protocol>(-1)
@@ -45,3 +41,8 @@ ben::socket<protocol>::socket(const char* addr, const char* srvc) : ben::abstrac
 	freeaddrinfo(head);
 	this->sockfd = sock;
 }
+
+
+// Explicitly instantiate avalailable socket protocols
+template class ben::socket<ben::tcp>;
+template class ben::socket<ben::udp>;

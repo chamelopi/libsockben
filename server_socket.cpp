@@ -1,8 +1,8 @@
 #include "socket.h"
 
-using namespace ben;
 
-tcp_server_socket::tcp_server_socket(short port)
+template <enum ben::socket_protocol protocol>
+ben::server_socket<protocol>::server_socket(short port) : ben::abstract_socket<protocol>(-1)
 {
 	struct sockaddr_in name = {};
 	name.sin_family = AF_INET;
@@ -24,13 +24,16 @@ tcp_server_socket::tcp_server_socket(short port)
 		throw std::runtime_error(strerror(errno));
 	}
 	
-	if (::listen(this->sockfd, SOMAXCONN) == -1)
+	if (protocol == tcp)
 	{
-		throw std::runtime_error(strerror(errno));
+		if (::listen(this->sockfd, SOMAXCONN) == -1)
+		{
+			throw std::runtime_error(strerror(errno));
+		}
 	}
 }
 
-tcp_socket tcp_server_socket::accept()
+ben::tcp_socket ben::tcp_server_socket::accept()
 {
 	int fd = ::accept(this->sockfd, nullptr, nullptr);
 	if (fd == -1)
@@ -38,10 +41,10 @@ tcp_socket tcp_server_socket::accept()
 		throw std::runtime_error(strerror(errno));
 	}
 	
-	return tcp_socket(fd);
+	return ben::tcp_socket(fd);
 }
 
-tcp_socket tcp_server_socket::accept(std::string& ip)
+ben::tcp_socket ben::tcp_server_socket::accept(std::string& ip)
 {
 	struct sockaddr addr;
 	socklen_t addrlen = sizeof(struct sockaddr);
@@ -77,5 +80,11 @@ tcp_socket tcp_server_socket::accept(std::string& ip)
 	ip.append(buf);
 	delete[] buf;
 	
-	return tcp_socket(fd);
+	return ben::tcp_socket(fd);
 }
+
+
+
+// Explicitly instantiate avalailable socket protocols
+template class ben::server_socket<ben::tcp>;
+template class ben::server_socket<ben::udp>;
