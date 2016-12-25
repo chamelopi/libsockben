@@ -1,12 +1,16 @@
 #include "socket.h"
 #include <iostream>
 
-using namespace ben;
+// Explicitly instantiate avalailable socket protocols
+template class ben::socket<ben::tcp>;
+template class ben::socket<ben::udp>;
 
-tcp_socket::tcp_socket(const char* addr, const char* srvc) : socket<tcp>(-1)
+
+template <enum ben::socket_protocol protocol>
+ben::socket<protocol>::socket(const char* addr, const char* srvc) : ben::abstract_socket<protocol>(-1)
 {
 	struct addrinfo hints = {};
-	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_socktype = protocol;
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;

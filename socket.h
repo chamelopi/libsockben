@@ -13,6 +13,8 @@ namespace ben
 	{
 	public:
 		socket(int sockfd) : abstract_socket<protocol>(sockfd) {}
+		socket(const char* addr, const char* srvc);
+		socket(std::string& addr, std::string& srvc) : socket(addr.c_str(), srvc.c_str()) {};
 	};
 	
 	
@@ -31,8 +33,8 @@ namespace ben
 	{
 	public:
 		tcp_socket(int sockfd) : socket<tcp>(sockfd) {}
-		tcp_socket(const char* addr, const char* srvc);
-		tcp_socket(std::string& addr, std::string& srvc) : tcp_socket(addr.c_str(), srvc.c_str()) {};
+		tcp_socket(const char* addr, const char* srvc) : socket<tcp>(addr, srvc) {}
+		tcp_socket(std::string& addr, std::string& srvc) : socket<tcp>(addr.c_str(), srvc.c_str()) {}
 	};
 	
 	class tcp_server_socket : public server_socket<tcp>
@@ -49,7 +51,9 @@ namespace ben
 	
 	class udp_socket : public socket<udp>
 	{
-		// TODO: Implement
+		udp_socket(int sockfd) : socket<udp>(sockfd) {}
+		udp_socket(const char* addr, const char* srvc) : socket<udp>(addr, srvc) {}
+		udp_socket(std::string& addr, std::string& srvc) : socket<udp>(addr.c_str(), srvc.c_str()) {}
 	};
 	
 	class udp_server_socket : public server_socket<udp>

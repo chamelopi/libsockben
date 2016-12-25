@@ -2,8 +2,13 @@
 
 namespace ben
 {
-	template<>
-	abstract_socket<tcp>::~abstract_socket()
+	// Explicitly instantiate avalailable socket protocols
+	template class ben::abstract_socket<ben::tcp>;
+	template class ben::abstract_socket<ben::udp>;
+	
+	
+	template<enum socket_protocol protocol>
+	abstract_socket<protocol>::~abstract_socket()
 	{
 		if (!this->closed)
 		{
@@ -13,9 +18,9 @@ namespace ben
 		}
 	}
 
-
-	template<>
-	void abstract_socket<tcp>::sendln(std::string& line)
+	
+	template<enum socket_protocol protocol>
+	void abstract_socket<protocol>::sendln(std::string& line)
 	{
 		if (this->closed) throw std::logic_error("Socket already closed");
 		
@@ -31,8 +36,9 @@ namespace ben
 		}
 	}
 
-	template<>
-	void abstract_socket<tcp>::recvln(std::string& line)
+	
+	template<enum socket_protocol protocol>
+	void abstract_socket<protocol>::recvln(std::string& line)
 	{
 		if (this->closed) throw std::logic_error("Socket already closed");
 		
@@ -50,8 +56,8 @@ namespace ben
 	}
 
 
-	template<>
-	void abstract_socket<tcp>::recv(void* buf, size_t len)
+	template<enum socket_protocol protocol>
+	void abstract_socket<protocol>::recv(void* buf, size_t len)
 	{
 		if (this->closed) throw std::logic_error("Socket already closed");
 		
@@ -62,8 +68,8 @@ namespace ben
 	}
 
 
-	template<>
-	void abstract_socket<tcp>::send(const void* buf, size_t len)
+	template<enum socket_protocol protocol>
+	void abstract_socket<protocol>::send(const void* buf, size_t len)
 	{
 		if (this->closed) throw std::logic_error("Socket already closed");
 		
@@ -73,8 +79,9 @@ namespace ben
 		}
 	}
 
-	template<>
-	void abstract_socket<tcp>::close()
+	
+	template<enum socket_protocol protocol>
+	void abstract_socket<protocol>::close()
 	{
 		if (!this->closed)		
 		{

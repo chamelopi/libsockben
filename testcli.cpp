@@ -1,4 +1,5 @@
-#include "socket.h" 
+#include "socket.h"
+#include <cassert>
 #include <iostream>
 
 using namespace std;
@@ -12,7 +13,7 @@ int main(void)
 	try
 	{
 		string buf;
-		ben::tcp_socket sock("localhost", "1337");
+		ben::socket<ben::tcp> sock("localhost", "1337");
 		
 		sock.recvln(buf);
 		cout << buf << endl;
