@@ -63,8 +63,6 @@ namespace ben
 	public:
 		udp_server_socket(short port) : server_socket<udp>(port) {}
 	};
-
-	// TODO: Implement stream operators
 }
 
 #endif
