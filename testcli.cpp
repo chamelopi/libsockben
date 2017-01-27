@@ -13,6 +13,7 @@ int main(void)
 	try
 	{
 		string buf;
+		int a;
 		ben::socket<ben::tcp> sock("localhost", "1337");
 		
 		sock.recvln(buf);
@@ -31,9 +32,14 @@ int main(void)
 		cout << buf2 << endl;
 		sock.send(buf2, 6);
 		
-		assert(strncmp(buf2, "abcde", 5) == 0);
-		assert(buf == text);
+		//assert(strncmp(buf2, "abcde", 5) == 0);
+		//assert(buf == text);
 		
+		sock >> text >> a;
+		cout << text << a;
+		sock << text;
+		cout << text;
+
 		sock.close();
 	}
 	catch(runtime_error& e)

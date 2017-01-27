@@ -2,3 +2,6 @@
 *.so
 testsrv
 testcli
+.kdev4/
+.directory
+*.kdev4

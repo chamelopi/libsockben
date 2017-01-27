@@ -13,6 +13,7 @@ int main(void)
 	try
 	{
 		ben::tcp_server_socket srv(1337);
+		int a = 42;
 
 		cout << "Waiting ..." << endl;
 
@@ -21,7 +22,7 @@ int main(void)
 		
 		cout << "Accepted connection from " << clientip << "." << endl;
 		
-		char buf1[5] = {'a', 'b', 'c', 'd', 'e'};
+		char buf1[6] = {'a', 'b', 'c', 'd', 'e'};
 		char buf2[6];
 		string buf;
 		string hw("Hello, World!");
@@ -29,8 +30,13 @@ int main(void)
 		cl.recvln(buf);
 		cl.sendln(buf);
 		
-		cl.send(buf1, 5);
-		cl.recv(buf2, 5);
+		cl.send(buf1, 6);
+		cl.recv(buf2, 6);
+		
+		cl << buf << a;
+		cout << buf << a;
+		cl >> buf;
+		cout << buf;
 	}
 	catch(runtime_error& e)
 	{
