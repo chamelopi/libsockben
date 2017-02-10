@@ -1,6 +1,6 @@
 CFLAGS=-std=c++11 -Wall -Wextra -Werror -pedantic
 
-.PHONY=all clean
+.PHONY=all clean install
 
 all: libsockben.so testsrv testcli
 
@@ -9,12 +9,15 @@ clean:
 	rm -f libsockben.so
 	rm -f testsrv
 
+install: all
+	install libsockben.so /usr/lib/libsockben.so
+
 libsockben.so: abstract_socket.o socket.o server_socket.o
 	g++ $(CFLAGS) -o libsockben.so $^ -fPIC -shared
 
 %.o: %.cpp
 	g++ $(CFLAGS) -c -o $@ $< -fPIC
-	
+
 testsrv: testsrv.o libsockben.so
 	g++ $(CFLAGS) -L . -o testsrv testsrv.o -lsockben
 
