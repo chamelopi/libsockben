@@ -68,7 +68,7 @@ namespace ben
 	template<enum socket_protocol protocol>
 	abstract_socket<protocol>& operator<<(abstract_socket<protocol>& sock, const std::string& val)
 	{
-		sock.sendln(val);
+		sock.send(val.c_str(), val.size());
 		return sock;
 	}
 

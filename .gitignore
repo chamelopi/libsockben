@@ -5,3 +5,4 @@ testcli
 .kdev4/
 .directory
 *.kdev4
+*.gch
