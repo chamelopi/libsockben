@@ -6,18 +6,20 @@ IPv4 TCP and UDP sockets on the Linux/Unix platform.
 Example code for the client side:
 
 ```c++
+#include <iostream>
+#include <string>
 #include <ben/socket.h>
 
-using namespace ben;
-
 int main(void) {
-  socket<tcp> sock("google.com", "80");
+  ben::socket<ben::tcp> sock("google.com", "80");
   // When writing std::string, \n is inserted automatically
   sock << "GET / HTTP/1.0\r";
+  std::string line;
   do {
-    std::string line;
     sock >> line;
     std::cout << line;
   } while (line != "\r");
+
+  return 0;
 }
 ```

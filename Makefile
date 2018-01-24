@@ -11,16 +11,16 @@ clean:
 	rm -f testcli
 
 install: all
-	install libsockben.so /usr/local/lib/libsockben.so
-	mkdir -p /usr/local/include/ben
-	install --target-directory=/usr/local/include/ben/ socket.h abstract_socket.h
+	install libsockben.so /usr/lib/libsockben.so
+	mkdir -p /usr/include/ben
+	install --target-directory=/usr/include/ben/ socket.h abstract_socket.h
 
 uninstall:
-	rm -f /usr/local/lib/libsockben.so
-	rm -f /usr/local/include/ben/socket.h
-	rm -f /usr/local/include/ben/abstract_socket.h
+	rm -f /usr/lib/libsockben.so
+	rm -f /usr/include/ben/socket.h
+	rm -f /usr/include/ben/abstract_socket.h
 	# Remove include dir if empty
-	rm -df /usr/local/include/ben
+	rm -df /usr/include/ben
 
 libsockben.so: abstract_socket.o socket.o server_socket.o
 	g++ $(CFLAGS) -o libsockben.so $^ -fPIC -shared
